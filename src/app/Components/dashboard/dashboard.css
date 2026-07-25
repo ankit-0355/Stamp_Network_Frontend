@@ -1,0 +1,13 @@
+::ng-deep cdk-virtual-scroll-viewport {
+    scrollbar-color: #ffffff #ffffff14;
+}
+
+.bagIcon {
+    .mat-icon {
+        @apply w-[30px]
+    }
+
+    .material-icons {
+        @apply text-[30px]
+    }
+}

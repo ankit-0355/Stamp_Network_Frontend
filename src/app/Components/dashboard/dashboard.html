@@ -1,0 +1,157 @@
+<div class="min-h-screen bg-black text-white flex flex-col font-sans">
+    <!-- Header -->
+    <header class="flex items-center justify-between px-8 py-4 bg-[#0B1224] border-b border-slate-900">
+        <div class="flex items-center justify-center gap-3">
+            <mat-icon class="flex items-center justify-center h-[30px] w-[30px] !text-[30px] text-[#00D492]">
+                shopping_bag
+            </mat-icon>
+            <span class="text-xl font-bold tracking-tight text-white flex items-center">
+                @if (dashboardData()) {
+                {{ dashboardData()?.storeName }}
+                } @else {
+                <ngx-skeleton-loader count="1"
+                    [theme]="{ 'width': '120px', 'height': '20px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                }
+            </span>
+        </div>
+        <div (click)="this.authService.storeLogout()"
+            class="flex items-center justify-center gap-2 text-slate-400 hover:text-white cursor-pointer transition-colors duration-200">
+            <mat-icon class="flex items-center justify-center h-[20px] w-[20px] !text-[20px]">logout</mat-icon>
+            <span class="text-sm font-semibold">Sign Out</span>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="flex-1 p-8 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
+        <!-- Left Section -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+
+            <!-- Launch POS Terminal Card -->
+            <div routerLink="/terminal"
+                class="bg-[#00D492] text-black p-6 rounded-2xl flex items-center justify-between shadow-lg cursor-pointer hover:opacity-95 transition-opacity duration-200">
+                <div>
+                    <h2 class="text-2xl font-extrabold tracking-tight">Launch POS Terminal</h2>
+                    <p class="text-black/85 text-sm mt-1 font-medium">Open the customer-facing loyalty stamp pad</p>
+                </div>
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <mat-icon class="text-black font-bold">arrow_forward</mat-icon>
+                </div>
+            </div>
+
+            <!-- Recent Transaction Card -->
+            <div class="bg-[#0B1224] border border-slate-900/60 rounded-2xl p-6 flex flex-col flex-grow shadow-xl">
+                <div class="flex items-center gap-2 mb-6">
+                    <mat-icon class="!text-[#00D492]">schedule</mat-icon>
+                    <h3 class="text-lg font-bold text-slate-200">Recent Transaction</h3>
+                </div>
+                @if (dashboardData()) {
+                @if(dashboardData()?.transactions?.length){
+                <cdk-virtual-scroll-viewport itemSize="70" class="flex flex-col gap-4 h-full">
+                    @for (item of dashboardData()?.transactions; track item) {
+                    <!-- <div *cdkVirtualFor="let item of dashboardData()?.transactions; track item" -->
+                    <div class="flex items-center justify-between py-2 border-b border-slate-800/40 last:border-0">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center"
+                                [class]="getStyle(item.icon)">
+                                <mat-icon>{{ item.icon }}</mat-icon>
+                            </div>
+                            <div>
+                                <p class="font-bold text-white text-base">{{ item.name }}</p>
+                                <p class="text-xs text-slate-400 font-medium">{{ item.activity }}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-slate-400 font-semibold">{{ item.timestamp }}</span>
+                    </div>
+                    }
+                </cdk-virtual-scroll-viewport>
+                }
+                @else {
+                <div class="flex items-center justify-center h-full">
+                    <p class="text-center text-slate-400 font-medium">No recent transactions</p>
+                </div>
+                }
+                } @else {
+                <!-- Skeleton Loader for Recent Transactions -->
+                <div class="flex flex-col gap-4">
+                    @for (i of [1, 2, 3]; track i) {
+                    <div class="flex items-center justify-between py-2 border-b border-slate-800/40 last:border-0">
+                        <div class="flex items-center gap-4 w-full">
+                            <ngx-skeleton-loader appearance="circle"
+                                [theme]="{ 'width': '48px', 'height': '48px', 'background-color': '#1E293B', 'margin': '0' }"></ngx-skeleton-loader>
+                            <div class="flex-1 flex flex-col gap-2">
+                                <ngx-skeleton-loader count="1"
+                                    [theme]="{ 'width': '50%', 'height': '16px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader count="1"
+                                    [theme]="{ 'width': '30%', 'height': '12px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                            </div>
+                        </div>
+                        <ngx-skeleton-loader count="1"
+                            [theme]="{ 'width': '60px', 'height': '12px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                    </div>
+                    }
+                </div>
+                }
+            </div>
+
+        </div>
+
+        <!-- Right Section -->
+        <div class="flex flex-col gap-6">
+
+            <!-- Register Customer Card -->
+            <div routerLink="/member-signup"
+                class="bg-[#0B1224] border border-slate-900/60 p-6 rounded-2xl flex items-center justify-between shadow-lg cursor-pointer hover:bg-[#111c36] transition-colors duration-200">
+                <div>
+                    <h2 class="text-xl font-extrabold tracking-tight text-white">Register Customer</h2>
+                    <p class="text-slate-400 text-sm mt-1 font-medium">Enroll a new loyalty member</p>
+                </div>
+                <div
+                    class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center border border-slate-900/40">
+                    <mat-icon class="text-[#00D492]">person_add</mat-icon>
+                </div>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="bg-[#0B1224] border border-slate-900/60 rounded-2xl p-6 flex flex-col flex-grow shadow-xl">
+                <h3 class="text-lg font-bold text-slate-200 mb-6">Monthly Summary</h3>
+
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center justify-between py-3 border-b border-slate-900/40 last:border-0">
+                        <span class="text-slate-400 font-semibold text-sm">Stamps Issued Today</span>
+                        <span class="text-2xl font-bold text-[#00D492] flex items-center justify-end">
+                            @if (dashboardData()) {
+                            {{ dashboardData()?.summary?.stampsIssued }}
+                            } @else {
+                            <ngx-skeleton-loader count="1"
+                                [theme]="{ 'width': '40px', 'height': '28px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                            }
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-slate-900/40 last:border-0">
+                        <span class="text-slate-400 font-semibold text-sm">Rewards Claimed</span>
+                        <span class="text-2xl font-bold text-amber-500 flex items-center justify-end">
+                            @if (dashboardData()) {
+                            {{ dashboardData()?.summary?.rewardsClaimed }}
+                            } @else {
+                            <ngx-skeleton-loader count="1"
+                                [theme]="{ 'width': '40px', 'height': '28px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                            }
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-slate-900/40 last:border-0">
+                        <span class="text-slate-400 font-semibold text-sm">New Enrollments</span>
+                        <span class="text-2xl font-bold text-blue-400 flex items-center justify-end">
+                            @if (dashboardData()) {
+                            {{ dashboardData()?.summary?.newEnrollments }}
+                            } @else {
+                            <ngx-skeleton-loader count="1"
+                                [theme]="{ 'width': '40px', 'height': '28px', 'background-color': '#1E293B', 'margin': '0', 'border-radius': '4px' }"></ngx-skeleton-loader>
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

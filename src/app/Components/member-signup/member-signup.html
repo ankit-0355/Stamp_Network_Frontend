@@ -1,0 +1,101 @@
+<div class="min-h-screen bg-black text-white flex justify-center items-center relative p-4 font-sans">
+  <!-- Exit Button -->
+  <a [routerLink]="['/dashboard/'+cookieService.get('store_id')]"
+    class="absolute top-6 left-6 px-6 py-2.5 bg-slate-800/85 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg shadow-md cursor-pointer text-sm transition-colors duration-200 decoration-none">
+    Exit
+  </a>
+
+  <!-- Registration Card -->
+  <div
+    class="w-[450px] bg-[#0A0F1D] border border-slate-900/60 rounded-3xl flex flex-col shadow-2xl items-center relative overflow-hidden">
+
+    @if (!isSuccess()) {
+    <div class="w-full flex flex-col items-center p-8 signup-form-panel">
+      <!-- Icon Badge -->
+      <div
+        class="w-12 h-12 bg-[#00D492]/10 text-[#00D492] rounded-full flex items-center justify-center mb-4 border border-[#00D492]/20">
+        <mat-icon class="!text-2xl">person_add</mat-icon>
+      </div>
+
+      <!-- Titles -->
+      <h1 class="text-xl font-bold tracking-tight text-white mb-1">New Customer Registration</h1>
+      <p class="text-xs text-slate-400 font-medium mb-6">Enroll a customer in the loyalty program</p>
+
+      @if (errorMessage()) {
+        <div class="w-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-6 flex items-center gap-2">
+          <mat-icon class="!text-lg w-5 h-5 flex items-center justify-center">error_outline</mat-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+
+      <!-- Registration Form -->
+      <form (submit)="onSubmit($event)" class="w-full flex flex-col gap-5">
+        <!-- Full Name -->
+        <div class="flex flex-col gap-2">
+          <label class="text-slate-400 font-semibold text-xs tracking-wide">First Name</label>
+          <input type="text" [formField]="memberForm.firstName"
+            class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
+            placeholder="Jane">
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-slate-400 font-semibold text-xs tracking-wide">Last Name</label>
+          <input type="text" [formField]="memberForm.lastName"
+            class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
+            placeholder="Doe">
+        </div>
+
+        <!-- Phone Number -->
+        <div class="flex flex-col gap-2">
+          <label class="text-slate-400 font-semibold text-xs tracking-wide">Phone Number</label>
+          <input type="text" [formField]="memberForm.phoneNumber"
+            class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
+            placeholder="(555) 000 4567">
+        </div>
+
+        <!-- Email Address -->
+        <div class="flex flex-col gap-2">
+          <label class="text-slate-400 font-semibold text-xs tracking-wide">Email</label>
+          <input type="email" [formField]="memberForm.email"
+            class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
+            placeholder="youremail@email.com">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="isLoading()"
+          class="bg-[#00D492] text-black font-extrabold text-sm tracking-wider uppercase rounded-xl py-4 flex items-center justify-center gap-2 cursor-pointer hover:opacity-95 transition-opacity duration-150 w-full mt-6 disabled:opacity-50">
+          @if (isLoading()) {
+          <mat-icon class="animate-spin">autorenew</mat-icon> Registering...
+          } @else {
+          Register Customer
+          }
+        </button>
+      </form>
+    </div>
+    } @else {
+    <!-- Success Message Container -->
+    <div class="signup-success-panel w-full flex flex-col items-center justify-center p-12 py-16">
+      <div
+        class="signup-success-icon w-20 h-20 bg-[#00D492]/10 border border-[#00D492]/20 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(0,212,146,0.3)] text-[#00D492]">
+        <mat-icon style="font-size: 48px; width: 48px; height: 48px; line-height: 48px;">check_circle</mat-icon>
+      </div>
+      <h2 class="signup-success-title text-white text-2xl font-bold mb-3 tracking-tight">
+        Customer Enrolled!
+      </h2>
+      <p class="signup-success-text text-slate-400 text-center mb-8 text-sm leading-relaxed">
+        The customer has been successfully added to your loyalty program.
+      </p>
+      <div class="flex w-full justify-between">
+        <button [routerLink]="['/dashboard/'+cookieService.get('store_id')]"
+          class="signup-success-btn bg-[#00D492] text-black font-extrabold text-sm rounded-xl p-2 flex items-center justify-center cursor-pointer hover:opacity-95 transition-opacity duration-150 w-[45%] mt-2">
+          Go to Dashboard
+        </button>
+        <button (click)="resetForm()"
+          class="signup-success-btn bg-[#00D492] text-black font-extrabold text-sm rounded-xl p-2 flex items-center justify-center cursor-pointer hover:opacity-95 transition-opacity duration-150 w-[45%] mt-2">
+          Register Another Customer
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</div>
