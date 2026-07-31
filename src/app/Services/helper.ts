@@ -66,7 +66,7 @@ export class Helper {
       case 'Stamp':
         return ['task_alt', 'Earned 1 Stamp'];
       case 'Reward':
-        return ['redeem', `Claimed ${this.amt} Discount`];
+        return ['redeem', `Claimed ${this.amt()} Discount`];
       case 'Enrollment':
         return ['person_add', 'New Customer Enrolled'];
       default:
