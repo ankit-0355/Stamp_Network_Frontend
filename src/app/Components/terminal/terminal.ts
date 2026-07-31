@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrl: './terminal.css',
 })
 export class Terminal implements OnInit {
-  private helper = inject(Helper);
+  helper = inject(Helper);
   cookieService = inject(CookieService);
 
   phoneNumber = signal<string>('');
@@ -71,16 +71,16 @@ export class Terminal implements OnInit {
           return;
         }
 
-        this.stampCount.set(res.total_stamps);
+        this.stampCount.set(res.account?.total_stamps || 0);
         this.pendingPhone = phone;
 
         if (res.rewardPending) {
           // Show the reward modal — do NOT clear phone yet
           this.showRewardModal.set(true);
         } else {
-          const account = res.account?.[0];
+          const account = res.account;
           const name = account ? `${account.first_name} ${account.last_name}` : 'Customer';
-          this.triggerToast(`Stamp added for ${name}! Total: ${res.total_stamps}/10 stamps.`);
+          this.triggerToast(`Stamp added for ${name}! Total: ${res.account?.total_stamps}/${this.helper.visit_cycle()} stamps.`);
           this.phoneNumber.set('');
         }
       },

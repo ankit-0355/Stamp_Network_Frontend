@@ -5,6 +5,7 @@ import { Dashboard } from './Components/dashboard/dashboard';
 import { Terminal } from './Components/terminal/terminal';
 import { MemberSignup } from './Components/member-signup/member-signup';
 import { UpdatePassword } from './Components/update-password/update-password';
+import { authGuard } from './guard/auth-guard';
 
 export const routes: Routes = [
     {
@@ -17,15 +18,18 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard/:store_id',
-        component: Dashboard
+        component: Dashboard,
+        canActivate: [authGuard]
     },
     {
         path: 'terminal',
-        component: Terminal
+        component: Terminal,
+        canActivate: [authGuard]
     },
     {
         path: 'member-signup',
-        component: MemberSignup
+        component: MemberSignup,
+        canActivate: [authGuard]
     },
     {
         path: 'update-password',

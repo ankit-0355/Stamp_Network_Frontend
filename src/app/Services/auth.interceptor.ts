@@ -21,16 +21,21 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      let userMessage = 'An unexpected error occurred.';
-      if (error.status === 401) {
-        userMessage = 'Your session has expired or is invalid. Please login again.';
+      let message: string | null = null;
+
+      if (error.status === 0) {
+        message = 'Unable to reach the server. Please check your connection and try again.';
+      } else if (error.status === 500) {
+        message = 'A server error occurred. Please try again later.';
       }
 
-      errorService.showError(userMessage, () => {
-        cookieService.delete('store_id');
-        cookieService.delete('access_token');
-        router.navigate(['/login']);
-      });
+      if (message !== null) {
+        errorService.showError(message, () => {
+          cookieService.delete('store_id', '/');
+          cookieService.delete('access_token', '/');
+          router.navigate(['/login']);
+        });
+      }
 
       return throwError(() => error);
     })

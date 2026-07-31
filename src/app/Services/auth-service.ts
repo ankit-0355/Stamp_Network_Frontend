@@ -25,16 +25,16 @@ export class AuthService {
   storeLogin(data: loginData) {
     return this.http.post<any>(this.url + '/auth/login', data).pipe(
       map((res) => {
-        this.cookieService.set("store_id", res.store_id)
-        this.cookieService.set("access_token", res.access_token)
+        this.cookieService.set("store_id", res.store_id, { path: '/' })
+        this.cookieService.set("access_token", res.access_token, { path: '/' })
         return res;
       })
     )
   }
 
   storeLogout() {
-    this.cookieService.delete("store_id")
-    this.cookieService.delete("access_token")
+    this.cookieService.delete("store_id", '/')
+    this.cookieService.delete("access_token", '/')
     this.router.navigate(['/login'])
     return true;
   }
@@ -45,8 +45,8 @@ export class AuthService {
 
   updatePassword(accessToken: string, newPassword: string) {
     return this.http.post<{ message: string }>(this.url + '/auth/password-reset/confirm', {
-      access_token: accessToken,
-      new_password: newPassword
+      accessToken: accessToken,
+      newPassword: newPassword
     });
   }
 

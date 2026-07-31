@@ -4,6 +4,8 @@ import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { Helper } from '../../Services/helper';
 import { AuthService } from '../../Services/auth-service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-update-password',
@@ -16,6 +18,7 @@ export class UpdatePassword implements OnInit {
   helperService = inject(Helper);
   authService = inject(AuthService);
   router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   // ── State signals ──────────────────────────────────────────────────────────
   accessToken = signal('');
@@ -33,14 +36,9 @@ export class UpdatePassword implements OnInit {
   confirmPassword = '';
 
   ngOnInit() {
-    // Supabase appends the recovery token in the URL hash:
-    // /update-password#access_token=xxx&type=recovery&...
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const token = params.get('access_token');
-    const type = params.get('type');
-
-    if (token && type === 'recovery') {
+    const token = this.activatedRoute.snapshot.queryParamMap.get('token');
+    console.log("token", token);
+    if (token) {
       this.accessToken.set(token);
     } else {
       this.tokenError.set(true);
@@ -67,7 +65,7 @@ export class UpdatePassword implements OnInit {
         this.loading.set(false);
         this.success.set(true);
         // Redirect to login after 2.5 seconds
-        setTimeout(() => this.router.navigate(['/login']), 2500);
+        setTimeout(() => this.router.navigate(['/login']), 3500);
       },
       error: (err) => {
         this.loading.set(false);

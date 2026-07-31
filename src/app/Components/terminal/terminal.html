@@ -6,11 +6,11 @@
   </a>
 
   <!-- Terminal Card -->
-  <div class="w-[450px] bg-[#0A0F1D] border border-slate-900/60 rounded-3xl p-8 flex flex-col shadow-2xl">
+  <div class="w-[450px] bg-[#0A0F1D] border border-slate-900/60 rounded-3xl p-4 flex flex-col shadow-2xl">
     <!-- Header -->
     <div class="flex items-center justify-between mb-4">
       <div>
-        <h1 class="text-xl font-bold tracking-tight text-white">Vapour Cloud Co.</h1>
+        <h1 class="text-xl font-bold tracking-tight text-white">Stamp Network</h1>
         <p class="text-xs text-slate-400 font-medium mt-0.5">Loyalty Terminal</p>
       </div>
       <!-- Status Badge -->
@@ -18,7 +18,7 @@
         class="flex items-center gap-1.5 px-3 py-1 bg-slate-850 border border-slate-800/50 rounded-full text-xs font-semibold text-slate-300">
         <span class="w-1.5 h-1.5 rounded-full bg-[#00D492] animate-pulse"></span>
         <span>Online</span>
-        <mat-icon class="!text-xs text-slate-400 flex items-center justify-center">wifi</mat-icon>
+        <mat-icon class="!text-md">wifi</mat-icon>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
     <!-- Phone Number Display -->
     <div class="border border-slate-800/80 bg-black/30 rounded-xl p-6 mb-8 flex flex-col items-center">
       <span class="text-[10px] text-slate-500 font-bold tracking-widest uppercase mb-4">Enter Phone Number</span>
-      <div class="flex justify-center items-center gap-6 text-2xl font-bold text-white tracking-widest">
+      <div class="flex justify-center items-center gap-3 text-xl font-bold text-white tracking-widest">
         <!-- Group 1 -->
         <div class="flex gap-2">
           <span>{{ getDigit(0) }}</span>
@@ -117,10 +117,10 @@
 
       <!-- Titles -->
       <h2 class="text-xl font-bold text-white mb-1">Reward Achieved</h2>
-      <p class="text-amber-500 font-bold text-sm mb-4">Apply 10% Discount</p>
+      <p class="text-amber-500 font-bold text-sm mb-4">Apply {{this.helper.amt()}} Discount</p>
 
       <!-- Description -->
-      <p class="text-slate-400 text-sm font-medium">Customer has reached 10 stamps</p>
+      <p class="text-slate-400 text-sm font-medium">Customer has reached {{this.helper.visit_cycle()}} stamps</p>
       <p class="text-slate-400 text-sm font-medium">Apply to Reset cycle to 0</p>
 
       <!-- Divider -->

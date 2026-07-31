@@ -22,20 +22,28 @@
       <p class="text-xs text-slate-400 font-medium mb-6">Enroll a customer in the loyalty program</p>
 
       @if (errorMessage()) {
-        <div class="w-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-6 flex items-center gap-2">
-          <mat-icon class="!text-lg w-5 h-5 flex items-center justify-center">error_outline</mat-icon>
-          <span>{{ errorMessage() }}</span>
-        </div>
+      <div
+        class="w-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-6 flex items-center gap-2">
+        <mat-icon class="!text-lg w-5 h-5 flex items-center justify-center">error_outline</mat-icon>
+        <span>{{ errorMessage() }}</span>
+      </div>
       }
 
       <!-- Registration Form -->
-      <form (submit)="onSubmit($event)" class="w-full flex flex-col gap-5">
+      <form novalidate (submit)="onSubmit($event)" class="w-full flex flex-col gap-5">
         <!-- Full Name -->
         <div class="flex flex-col gap-2">
           <label class="text-slate-400 font-semibold text-xs tracking-wide">First Name</label>
           <input type="text" [formField]="memberForm.firstName"
             class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
             placeholder="Jane">
+          @if (memberForm.firstName().touched() && memberForm.firstName().invalid()) {
+          <ul class="text-red-500 list-disc pl-5 text-sm">
+            @for (error of memberForm.firstName().errors(); track error) {
+            <li>{{ error.message }}</li>
+            }
+          </ul>
+          }
         </div>
 
         <div class="flex flex-col gap-2">
@@ -43,6 +51,13 @@
           <input type="text" [formField]="memberForm.lastName"
             class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
             placeholder="Doe">
+          @if (memberForm.lastName().touched() && memberForm.lastName().invalid()) {
+          <ul class="text-red-500 list-disc pl-5 text-sm">
+            @for (error of memberForm.lastName().errors(); track error) {
+            <li>{{ error.message }}</li>
+            }
+          </ul>
+          }
         </div>
 
         <!-- Phone Number -->
@@ -51,6 +66,13 @@
           <input type="text" [formField]="memberForm.phoneNumber"
             class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
             placeholder="(555) 000 4567">
+          @if (memberForm.phoneNumber().touched() && memberForm.phoneNumber().invalid()) {
+          <ul class="text-red-500 list-disc pl-5 text-sm">
+            @for (error of memberForm.phoneNumber().errors(); track error) {
+            <li>{{ error.message }}</li>
+            }
+          </ul>
+          }
         </div>
 
         <!-- Email Address -->
@@ -59,6 +81,13 @@
           <input type="email" [formField]="memberForm.email"
             class="border-[#2E3748] border bg-[#0B1224]/50 p-3 rounded-lg text-white placeholder-slate-650 focus:outline-none focus:border-[#00D492] transition-colors"
             placeholder="youremail@email.com">
+          @if (memberForm.email().touched() && memberForm.email().invalid()) {
+          <ul class="text-red-500 list-disc pl-5 text-sm">
+            @for (error of memberForm.email().errors(); track error) {
+            <li>{{ error.message }}</li>
+            }
+          </ul>
+          }
         </div>
 
         <!-- Submit Button -->
@@ -73,6 +102,7 @@
       </form>
     </div>
     } @else {
+
     <!-- Success Message Container -->
     <div class="signup-success-panel w-full flex flex-col items-center justify-center p-12 py-16">
       <div

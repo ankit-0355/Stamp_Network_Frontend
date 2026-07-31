@@ -36,6 +36,11 @@ export class MemberSignup {
   });
 
   resetForm() {
+    this.memberForm.firstName().reset();
+    this.memberForm.lastName().reset();
+    this.memberForm.phoneNumber().reset();
+    this.memberForm.email().reset();
+
     this.memberModel.set({
       firstName: '',
       lastName: '',
@@ -48,6 +53,16 @@ export class MemberSignup {
   onSubmit(event: Event) {
     event.preventDefault();
     // Perform login logic here
+
+    this.memberForm.firstName().markAsTouched();
+    this.memberForm.lastName().markAsTouched();
+    this.memberForm.phoneNumber().markAsTouched();
+    this.memberForm.email().markAsTouched();
+
+    if (this.memberForm().invalid()) {
+      return
+    }
+
 
     const body: Record<string, string> = {
       'email': this.memberModel().email,

@@ -1,16 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Helper } from '../../Services/helper';
 import { loginData } from '../../models/model';
-import { form, FormField, required } from '@angular/forms/signals';
+import { email, form, FormField, required } from '@angular/forms/signals';
 import { AuthService } from '../../Services/auth-service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [MatIcon, FormField, RouterLink, FormsModule],
+  // standalone: true,
+  imports: [MatIcon, FormField, RouterLink, FormsModule,
+    MatFormFieldModule, MatInputModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -27,17 +30,25 @@ export class Login {
 
   loginForm = form(this.loginModel, (schemaPath) => {
     required(schemaPath.email, { message: 'Email is required' });
+    email(schemaPath.email, { message: 'Enter a valid email' });
     required(schemaPath.password, { message: 'Password is required' });
   });
 
-  onLogin(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
+    this.loginForm.email().markAsTouched();
+    this.loginForm.password().markAsTouched();
+
+    if (this.loginForm().invalid()) {
+      return;
+    }
+
     this.authService.storeLogin(this.loginModel()).subscribe({
       next: (res) => {
         this.router.navigate(['/dashboard', res.store_id]);
       },
       error: (err) => {
-        if (err.status == 401) {
+        if (err.status == 401 || err.status == 404) {
           this.authService.showInvalidLogin.set(true);
         }
       }

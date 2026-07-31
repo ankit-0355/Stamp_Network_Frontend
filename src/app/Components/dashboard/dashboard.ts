@@ -20,7 +20,7 @@ export class Dashboard {
   dashboardData = signal<dashboardModel | null>(null);
 
   ngOnInit() {
-    this.helperService.getDashboardDate().pipe(delay(2000))
+    this.helperService.getDashboardDate().pipe(delay(1000))
       .subscribe({
         next: (res: any) => {
           this.dashboardData.set(res);

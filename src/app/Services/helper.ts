@@ -12,7 +12,8 @@ export class Helper {
   http = inject(HttpClient)
   cookieService = inject(CookieService);
 
-  amt = env_variable.REWARD;
+  amt = signal<string>('')
+  visit_cycle = signal<number>(0)
   baseurl = env_variable.SERVER_URL
 
   showPassword = signal<boolean>(false);
@@ -24,6 +25,10 @@ export class Helper {
   getDashboardDate() {
     return this.http.get<any>(this.baseurl + '/api/dashboard?storeId=' + this.cookieService.get('store_id')).pipe(
       map((res) => {
+        if (res.reward && res.visit_cycle) {
+          this.amt.set(res.reward);
+          this.visit_cycle.set(res.visit_cycle)
+        }
         res.transactions = res.transactions.map((item: transactionsModel) => ({
           ...item,
           timestamp: this.formatDateTime(item.timestamp),

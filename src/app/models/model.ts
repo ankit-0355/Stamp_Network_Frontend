@@ -39,14 +39,15 @@ export interface loginData {
 export interface validateStampResponse {
     isValid: boolean;
     rewardPending: boolean;
-    total_stamps: number;
+    reward: string;
+    visit_cycle: string;
     message?: string;
-    account?: Array<{
+    account?: {
         first_name: string;
         last_name: string;
         total_stamps: number;
         customer_id: string;
-    }>;
+    };
 }
 
 export interface confirmRewardResponse {
