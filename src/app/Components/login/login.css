@@ -21,6 +21,10 @@
     width: 32px !important;
 }
 
+.mat-accent {
+    --mat-progress-spinner-active-indicator-color: #00D492;
+}
+
 /* ── Spinner ─────────────────────────────────────────────────────────────── */
 .forgot-spinner {
     display: inline-block;

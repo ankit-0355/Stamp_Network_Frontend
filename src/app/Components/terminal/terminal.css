@@ -12,3 +12,17 @@
 .animate-slide-in {
   animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+.key-active {
+  background-color: rgba(30, 41, 59, 0.85) !important;
+  transform: scale(0.95);
+  border-color: rgba(148, 163, 184, 0.6) !important;
+  transition: transform 0.1s ease, background-color 0.1s ease !important;
+}
+
+.key-active-clear {
+  background-color: rgba(153, 27, 27, 0.6) !important;
+  transform: scale(0.95);
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  transition: transform 0.1s ease, background-color 0.1s ease !important;
+}

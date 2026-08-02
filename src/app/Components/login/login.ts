@@ -3,6 +3,7 @@ import { RouterLink, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { Helper } from '../../Services/helper';
 import { loginData } from '../../models/model';
@@ -13,7 +14,7 @@ import { AuthService } from '../../Services/auth-service';
   selector: 'app-login',
   // standalone: true,
   imports: [MatIcon, FormField, RouterLink, FormsModule,
-    MatFormFieldModule, MatInputModule],
+    MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -21,6 +22,7 @@ export class Login {
   helperService = inject(Helper);
   authService = inject(AuthService);
   router = inject(Router);
+  loginLoader = signal<boolean>(false)
 
   // ── Login form ──────────────────────────────────────────────────────────────
   loginModel = signal<loginData>({
@@ -42,15 +44,17 @@ export class Login {
     if (this.loginForm().invalid()) {
       return;
     }
-
+    this.loginLoader.set(true)
     this.authService.storeLogin(this.loginModel()).subscribe({
       next: (res) => {
         this.router.navigate(['/dashboard', res.store_id]);
+        this.loginLoader.set(false)
       },
       error: (err) => {
         if (err.status == 401 || err.status == 404) {
           this.authService.showInvalidLogin.set(true);
         }
+        this.loginLoader.set(false)
       }
     });
   }

@@ -44,7 +44,7 @@
             </span>
 
             <!-- Error Message -->
-            <div class="min-h-25">
+            <div class="min-h-20">
                 @if(this.authService.showInvalidLogin()){
                 <div class="flex items-center gap-3 w-full mb-5 p-2 rounded-xl bg-red-950/40 border border-red-500/40 
                 animate-[fadeSlideIn_0.25s_ease_both]">
@@ -53,11 +53,17 @@
                 </div>
                 }
             </div>
-
             <!-- Login Button -->
+            @if(!loginLoader()) {
             <button type="submit" class="bg-[#00D492] text-black text-lg rounded-md p-1.5 font-bold cursor-pointer">
                 Sign in
             </button>
+            }
+            @else {
+            <div class="flex justify-center">
+                <mat-spinner color="accent" diameter="50"></mat-spinner>
+            </div>
+            }
 
             <!-- Signup Link -->
             <p class="text-center mt-2">

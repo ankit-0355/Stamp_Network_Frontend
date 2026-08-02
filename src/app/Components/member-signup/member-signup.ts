@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { memberData } from '../../models/model';
-import { form, FormField, required } from '@angular/forms/signals';
+import { email, form, FormField, pattern, required } from '@angular/forms/signals';
 import { Helper } from '../../Services/helper';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -32,7 +32,9 @@ export class MemberSignup {
     required(schemaPath.firstName, { message: 'First Name is required' });
     required(schemaPath.lastName, { message: 'Last Name is required' });
     required(schemaPath.phoneNumber, { message: 'Phone Number is required' });
+    pattern(schemaPath.phoneNumber, /^\d{10}$/, { message: 'Phone Number must be 10 digits numeric' });
     required(schemaPath.email, { message: 'Email is required' });
+    email(schemaPath.email, { message: 'Enter a valid email' })
   });
 
   resetForm() {

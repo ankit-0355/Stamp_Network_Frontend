@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { Helper } from '../../Services/helper';
@@ -21,6 +21,7 @@ export class Terminal implements OnInit {
   toastMessage = signal<string>('');
   isLoading = signal<boolean>(false);
   errorMessage = signal<string>('');
+  activeKeys = signal<Record<string, boolean>>({});
 
   /** Stored after a successful /validate so confirmReward can reuse it */
   private pendingPhone = '';
@@ -28,6 +29,44 @@ export class Terminal implements OnInit {
   private toastTimeout: any;
 
   ngOnInit(): void { }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    const activeEl = document.activeElement;
+    if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+      return;
+    }
+
+    const key = event.key;
+
+    if (key >= '0' && key <= '9') {
+      this.onKeyPress(key);
+      this.triggerVisualFeedback(key);
+    } else if (key === 'Backspace') {
+      this.onBackspace();
+      this.triggerVisualFeedback('backspace');
+    } else if (key === 'Enter') {
+      if (this.showRewardModal()) {
+        this.applyReward();
+      } else {
+        this.validateAndAddStamp();
+      }
+    } else if (key === 'Escape') {
+      if (this.showRewardModal()) {
+        this.closeModal();
+      } else {
+        this.onClear();
+        this.triggerVisualFeedback('clear');
+      }
+    }
+  }
+
+  triggerVisualFeedback(key: string) {
+    this.activeKeys.update((prev) => ({ ...prev, [key]: true }));
+    setTimeout(() => {
+      this.activeKeys.update((prev) => ({ ...prev, [key]: false }));
+    }, 150);
+  }
 
   onKeyPress(digit: string): void {
     if (this.phoneNumber().length < 10) {

@@ -53,32 +53,32 @@
 
     <!-- Keypad Grid -->
     <div class="grid grid-cols-3 gap-4 mb-8">
-      <button (click)="onKeyPress('1')"
+      <button (click)="onKeyPress('1')" [class.key-active]="activeKeys()['1']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">1</button>
-      <button (click)="onKeyPress('2')"
+      <button (click)="onKeyPress('2')" [class.key-active]="activeKeys()['2']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">2</button>
-      <button (click)="onKeyPress('3')"
+      <button (click)="onKeyPress('3')" [class.key-active]="activeKeys()['3']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">3</button>
 
-      <button (click)="onKeyPress('4')"
+      <button (click)="onKeyPress('4')" [class.key-active]="activeKeys()['4']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">4</button>
-      <button (click)="onKeyPress('5')"
+      <button (click)="onKeyPress('5')" [class.key-active]="activeKeys()['5']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">5</button>
-      <button (click)="onKeyPress('6')"
+      <button (click)="onKeyPress('6')" [class.key-active]="activeKeys()['6']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">6</button>
 
-      <button (click)="onKeyPress('7')"
+      <button (click)="onKeyPress('7')" [class.key-active]="activeKeys()['7']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">7</button>
-      <button (click)="onKeyPress('8')"
+      <button (click)="onKeyPress('8')" [class.key-active]="activeKeys()['8']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">8</button>
-      <button (click)="onKeyPress('9')"
+      <button (click)="onKeyPress('9')" [class.key-active]="activeKeys()['9']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">9</button>
 
-      <button (click)="onClear()"
+      <button (click)="onClear()" [class.key-active-clear]="activeKeys()['clear']"
         class="bg-red-950/40 hover:bg-red-950/60 border border-red-900/30 text-red-500 hover:text-red-400 text-sm font-bold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">CLEAR</button>
-      <button (click)="onKeyPress('0')"
+      <button (click)="onKeyPress('0')" [class.key-active]="activeKeys()['0']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white text-3xl font-semibold rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">0</button>
-      <button (click)="onBackspace()"
+      <button (click)="onBackspace()" [class.key-active]="activeKeys()['backspace']"
         class="bg-[#1E293B]/40 hover:bg-[#1E293B]/70 border border-slate-800/40 text-white rounded-xl py-5 flex items-center justify-center cursor-pointer transition-colors duration-150">
         <mat-icon class="!text-2xl flex items-center justify-center">backspace</mat-icon>
       </button>
